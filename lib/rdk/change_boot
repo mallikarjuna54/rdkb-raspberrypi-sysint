@@ -1,0 +1,35 @@
+#!/bin/bash
+
+if [ $# -lt 1 ]; then
+    echo "need one argument atleast"
+    echo "argument should be either rdkb, rdkv_client, rdkv_hybrid or pixel"
+    exit 1
+fi
+
+#6 for rdkb
+#8 for rdkv_client
+#10 for rdkv_hybrid
+#12 for pixel
+
+#default is 6
+bootnumber=6
+
+if [ "$1" == "rdkb" ]; then
+  bootnumber=6
+elif [ "$1" == "rdkv_client" ]; then
+  bootnumber=8
+elif [ "$1" == "rdkv_hybrid" ]; then
+  bootnumber=10
+elif [ "$1" == "pixel" ]; then
+  bootnumber=12
+fi
+
+echo "making $bootnumber as default boot settings"
+
+mkdir /tmp/settings
+mount /dev/mmcblk0p5 /tmp/settings/
+cd /tmp/settings/
+sed -i "/default_partition_to_boot/c\default_partition_to_boot=$bootnumber" noobs.conf
+cd -
+umount /tmp/settings/
+/sbin/reboot -f
