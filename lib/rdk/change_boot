@@ -16,12 +16,8 @@ bootnumber=6
 
 if [ "$1" == "rdkb" ]; then
   bootnumber=6
-elif [ "$1" == "rdkv_client" ]; then
-  bootnumber=8
 elif [ "$1" == "rdkv_hybrid" ]; then
-  bootnumber=10
-elif [ "$1" == "pixel" ]; then
-  bootnumber=12
+  bootnumber=8
 fi
 
 echo "making $bootnumber as default boot settings"
