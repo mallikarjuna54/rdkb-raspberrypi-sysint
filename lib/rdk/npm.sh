@@ -19,6 +19,7 @@
 ##########################################################################
 
 #NPM installation of node_module libraries for speed test
+npm cache clean
 npm install ws --prefix ~/
 npm install q --prefix ~/
 
