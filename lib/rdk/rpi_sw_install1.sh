@@ -140,8 +140,8 @@ elif [ -f "$cloudFWFile" ]; then
 # Create storage area directory in current rootfs and mount storage area
 #--------------------------------------------------------------------------------------------------
 
-bank1_partition_name=`fdisk /dev/mmcblk0 -l | tail -2 | cut -d' ' -f1 | head -n1`
-extended_block_name=`fdisk /dev/mmcblk0 -l | tail -2 | cut -d' ' -f1 | tail -1`
+bank1_partition_name=`fdisk /dev/mmcblk0 -l | grep /dev | tail -2 | cut -d' ' -f1 | head -n1`
+extended_block_name=`fdisk /dev/mmcblk0 -l | grep /dev | tail -2 | cut -d' ' -f1 | tail -1`
 
 mkdir -p /extblock
 mount $extended_block_name /extblock

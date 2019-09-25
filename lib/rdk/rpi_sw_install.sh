@@ -27,6 +27,9 @@
 partition_check_name_block1=`fdisk /dev/mmcblk0 -l | tail -2 | tr -s ' ' | cut -d ' ' -f1 | tail -1`
 partition_check_name_block2=`fdisk /dev/mmcblk0 -l | tail -2 | tr -s ' ' | cut -d ' ' -f1 | head -n 1`
 
+#partition_check_name_block1=`fdisk /dev/mmcblk0 -l | grep /dev | tail -2 | tr -s ' ' | cut -d ' ' -f1 | tail -1`
+#partition_check_name_block2=`fdisk /dev/mmcblk0 -l | grep /dev | tail -2 | tr -s ' ' | cut -d ' ' -f1 | head -n 1`
+
 echo "Checking available partition for bank switch and image upgrade... "
 
 # To Create P3 and P4 partition if not available
@@ -55,21 +58,6 @@ then
 	reboot -f
 else
 
-# To Create Storage partition p4  if rootfs partition p3 is available
-
-    echo "Creating additional partition for storage area and box will go for reboot..."
-    if [ "$partition_check_name_block1" = "/dev/mmcblk0p3" ]
-    then
-        storage_partition=`fdisk /dev/mmcblk0 -l | tail -2 | tr -s ' ' | cut -d ' ' -f3 | tail -1`
-        storage_offset=1
-        size_offset=40960
-        storage_start=$((storage_partition+storage_offset))
-        storage_end=$((storage_start+size_offset))
-        echo "Creating Storage partition mmc0blkp4..."
-        echo -e "\nn\np\n$((storage_start))\n$((storage_end))\np\nw" | fdisk /dev/mmcblk0 
-        reboot -f
-    else
-        echo "storage partition mmcblk0p4 is available"
-    fi
+        echo "Additional  partitions are available"
 fi
 

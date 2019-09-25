@@ -50,6 +50,9 @@ fi
 
 echo "Main app & Triggering deviceInitiatedFWDnld.sh "
 
+echo "CKP !!!!!!!!! calling rpi_sw_install for partition check ... "
+sh /lib/rdk/rpi_sw_install.sh
+
 currentVersion=`grep "^imagename" /version.txt | cut -d ':' -f2`
 #estbMac=`ifconfig erouter0 | grep HWaddr | cut -c39-55`
 

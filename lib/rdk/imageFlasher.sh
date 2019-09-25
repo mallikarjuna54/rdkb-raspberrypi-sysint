@@ -40,8 +40,8 @@ if [ ! $UPGRADE_FILE ];then echo "Missing the image file..!"; exit -2;fi
 
 # Call RPI flashing utility
 if [ -f /lib/rdk/rpi_sw_install.sh ]; then 
-    echo "CKP !!!!!!!!! calling rpi_sw_install"
-   sh /lib/rdk/rpi_sw_install.sh
+   # echo "CKP !!!!!!!!! calling rpi_sw_install"
+   #sh /lib/rdk/rpi_sw_install.sh
    sh /lib/rdk/rpi_sw_install1.sh $PROTO $CLOUD_LOCATION $DOWNLOAD_LOCATION
     exit $?
 else

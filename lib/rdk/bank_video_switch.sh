@@ -37,24 +37,23 @@ mount /dev/mmcblk0p1 /extblock/bank0_linux
 if [ "$activeBank" = "$bank1_partition_name" ];
 then
 
-    passiveBank=/dev/mmcblk0p2;
+    passiveBank="/dev/mmcblk0p4";
 
     rm -rf /extblock/bank0_linux/*
 
-    cp -R /extblock/data_bkup_linux_bank0/* /extblock/bank0_linux/
+    cp -R /extblock/vlinux_backup_data/* /extblock/bank0_linux/
 
-    # change cmdline.txt for bank0 linux to partition p2 or mmcblk0p2 which has to be active bank after reboot
+    # change cmdline.txt for bank0 linux to partition p4 or mmcblk0p4 which has to be active bank after reboot
     sed -i -e "s|${activeBank}|${passiveBank}|g" /extblock/bank0_linux/cmdline.txt
-
 else
 
-    passiveBank=$bank1_partition_name;
+    passiveBank="/dev/mmcblk0p4";
 
     rm -rf /extblock/bank0_linux/*
 
-    cp -R /extblock/data_bkup_linux_bank1/* /extblock/bank0_linux/
+    cp -R /extblock/vlinux_backup_data/* /extblock/bank0_linux/
 
-    # change cmdline.txt for bank0 linux to partition p2 or mmcblk0p2 which has to be active bank after reboot
+    # change cmdline.txt for bank0 linux to partition p4 or mmcblk0p4 which has to be active bank after reboot
     sed -i -e "s|${activeBank}|${passiveBank}|g" /extblock/bank0_linux/cmdline.txt
 
 fi
@@ -69,4 +68,3 @@ umount /extblock
 echo "Rebooting with bank switch ...."
 
 reboot -f
-    
