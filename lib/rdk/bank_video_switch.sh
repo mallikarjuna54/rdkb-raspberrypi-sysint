@@ -21,10 +21,10 @@
 # Identify active bank ( either bank 0 or bank 1 ) or ( mmcblk0p2 or mmcblk0p3 )
 #--------------------------------------------------------------------------------------------------
 
-activeBank=`sed -e "s/.*root=//g" /proc/cmdline | cut -d ' ' -f1`
-echo "Active bank partition is $activeBank"
+#activeBank=`sed -e "s/.*root=//g" /proc/cmdline | cut -d ' ' -f1`
+activeBank="/dev/mmcblk0p2"
+echo "Active bank partition is $activeBank in default video image"
 
-bank1_partition_name=`fdisk /dev/mmcblk0 -l | grep /dev | tail -2 | cut -d' ' -f1 | head -n1`
 storage_block_name=`fdisk /dev/mmcblk0 -l | grep /dev | tail -2 | cut -d' ' -f1 | tail -1`
 
 mkdir -p /extblock
@@ -34,29 +34,16 @@ mkdir -p /extblock/bank0_linux
 
 mount /dev/mmcblk0p1 /extblock/bank0_linux
 
-if [ "$activeBank" = "$bank1_partition_name" ];
-then
 
-    passiveBank="/dev/mmcblk0p4";
+passiveBank="/dev/mmcblk0p4";
 
-    rm -rf /extblock/bank0_linux/*
+rm -rf /extblock/bank0_linux/*
 
-    cp -R /extblock/vlinux_backup_data/* /extblock/bank0_linux/
+cp -R /extblock/vlinux_backup_data/* /extblock/bank0_linux/
 
-    # change cmdline.txt for bank0 linux to partition p4 or mmcblk0p4 which has to be active bank after reboot
-    sed -i -e "s|${activeBank}|${passiveBank}|g" /extblock/bank0_linux/cmdline.txt
-else
+# change cmdline.txt for bank0 linux to partition p4 or mmcblk0p4 which has to be active bank after reboot
+sed -i -e "s|${activeBank}|${passiveBank}|g" /extblock/bank0_linux/cmdline.txt
 
-    passiveBank="/dev/mmcblk0p4";
-
-    rm -rf /extblock/bank0_linux/*
-
-    cp -R /extblock/vlinux_backup_data/* /extblock/bank0_linux/
-
-    # change cmdline.txt for bank0 linux to partition p4 or mmcblk0p4 which has to be active bank after reboot
-    sed -i -e "s|${activeBank}|${passiveBank}|g" /extblock/bank0_linux/cmdline.txt
-
-fi
 
 umount /extblock/bank0_linux
 
