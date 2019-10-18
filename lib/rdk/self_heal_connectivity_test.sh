@@ -446,21 +446,14 @@ SELFHEAL_ENABLE=`syscfg get selfheal_enable`
 while [ $SELFHEAL_ENABLE = "true" ]
 do
 
-	if [ "$calcRandom" -eq 1 ] 
-	then
-
-		calcRandTimetoStartPing
-		calcRandom=0
-	else
 		INTERVAL=`syscfg get ConnTest_PingInterval`
 
 		if [ "$INTERVAL" = "" ] 
 		then
 			INTERVAL=60
 		fi
-		INTERVAL=$(($INTERVAL*60))
+		#INTERVAL=$(($INTERVAL*60))
 		sleep $INTERVAL
-	fi
 
 
 	runPingTest
